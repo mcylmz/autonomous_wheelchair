@@ -1,0 +1,11 @@
+<launch>
+  <!-- Merge RP and RS -->
+  <include file="$(find wheelchair_navigation)/launch/laser_merge_rp_rs.launch" />
+
+  
+  <!-- AMCL -->
+  <include file="$(find wheelchair_navigation)/launch/wheelchair_amcl.launch" />
+ 
+  <!-- Rviz-->
+  <node name="rviz" pkg="rviz" type="rviz"/>
+</launch>

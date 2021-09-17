@@ -1,0 +1,29 @@
+<launch>
+      <arg name="base_frame" default="base_footprint"/>
+      <arg name="lidar_frame" default="camera_link"/>
+
+      <!-- camera must be positioned just over base_frame -->
+      <arg name="camera_position" default="0 0 1.71 0"/> <!-- x y z yaw -->
+
+      <node pkg="perception" 
+            type="imu_static_transform_publisher" 
+            args="$(arg base_frame) camera_link $(arg camera_position)"
+            name="imu_static_transform_publisher"
+            output="screen" />
+
+
+      <!-- <node pkg="tf2_ros"
+            type="static_transform_publisher"
+            name="lidar_footprint_broadcaster"
+            args="0.70 0 0 0 0 0 $(arg base_frame) $(arg lidar_frame)" /> -->
+
+
+      <node pkg="perception"
+            type="point_transform_laser"
+            name="point_transform_laser"
+            args="$(arg base_frame) $(arg lidar_frame) 5.0 input:=/camera/depth/color/points"
+            respawn="true"
+            output="screen" />
+
+      
+</launch>

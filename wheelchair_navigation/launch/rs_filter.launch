@@ -1,0 +1,10 @@
+<launch>
+  <!-- <remap from = "scan_filtered" to ="rp_laser_front_filtered" /> -->
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain"
+      name="laser_filter_rs">
+    <rosparam command="load" file="$(find wheelchair_navigation)/param/laser_rs.yaml" />
+    <remap from="scan" to="/pseudo_scan" />
+    <remap from="scan_filtered"	to="/rs_filtered"/>
+  </node>
+
+</launch> 

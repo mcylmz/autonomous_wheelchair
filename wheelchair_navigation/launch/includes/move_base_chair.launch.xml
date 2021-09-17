@@ -1,0 +1,22 @@
+
+<launch>
+
+  <arg name="odom_topic" default="odom" />
+  <arg name="cmd_vel_topic" default="/cmd_vel" />
+  <arg name="move_forward_only" default="false"/>
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find chair)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find chair)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find chair)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find chair)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find chair)/param/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find chair)/param/dwa_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find chair)/param/move_base_params.yaml" command="load" />
+
+    <!-- <remap from="cmd_vel" to="/cmd_vel_mux/input/navi"/> -->
+    <!-- <remap from="odom" to="$(arg odom_topic)"/> -->
+  </node>
+  
+</launch>
+
+

@@ -1,0 +1,5 @@
+<launch>
+    <node name="danger_factor" pkg="fgm_plugin" type="danger_factor.py"/>
+    <node name="fuzzy1" pkg="fgm_plugin" type="fuzzy1.py"/>
+    <node name="fuzzy2" pkg="fgm_plugin" type="fuzzy2.py"/>
+</launch>

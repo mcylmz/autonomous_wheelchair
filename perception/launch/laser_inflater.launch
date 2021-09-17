@@ -1,0 +1,11 @@
+<launch>
+      <arg name="radius" default="0.30"/>
+      <arg name="n_duplicates" default="180"/>
+
+      <node pkg="perception"
+            type="laser_inflater"
+            name="pseudoscan_inflater"
+            args="$(arg radius) $(arg n_duplicates) input:=/laser_merged_rp_rs output:=/inflated_pseudo_scan"
+            respawn="true"
+            output="screen" />
+</launch>

@@ -1,0 +1,59 @@
+<launch>
+  <!-- Load the wheelchair URDF model into the parameter server -->
+  <param name="robot_description" textfile="$(find wheelchair_navigation)/urdf/wheelchair.urdf" />
+ 
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+  <!-- Map server -->
+  <arg name="map_file" default="$(find wheelchair_navigation)/maps/map.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+	
+  <!-- Motor driver -->
+  <node name="wheelchair_node" pkg="wheelchair_navigation" type="wheelchair_node"/>
+
+  <!-- Odometry -->
+  <node name="enncoder2tf" pkg="wheelchair_navigation" type="encoder2tf.py" />
+
+  <!-- Twist to motor -->
+  <node name="twist2motor" pkg="wheelchair_navigation" type="twist2motors.py" />
+
+  <!-- Run RealSense -->
+  <include file="$(find perception)/launch/rs_camera_custom.launch" />
+  <include file="$(find perception)/launch/perception.launch" />
+
+  <!-- RealSense postfilters -->
+  <node name="rs_postfilters" pkg="wheelchair_navigation" type="postfilters.sh" />
+
+  <!-- Run RPlidar-->
+  <include file="$(find rplidar_ros)/launch/rplidar_all.launch" />
+
+  <!-- RP filter -->
+  <include file="$(find wheelchair_navigation)/launch/rp_filter.launch" />
+
+  <!-- RealSense filter -->
+  <include file="$(find wheelchair_navigation)/launch/rs_filter.launch" />
+
+  <!-- Merge RP and RS -->
+  <include file="$(find wheelchair_navigation)/launch/laser_merge_rp_rs.launch" />
+
+  <!-- RealSense inflation -->
+  <include file="$(find perception)/launch/laser_inflater.launch" />
+  
+  <!-- AMCL -->
+  <include file="$(find wheelchair_navigation)/launch/wheelchair_amcl.launch" />
+ 
+  <!-- move_base -->
+  <include file="$(find wheelchair_navigation)/launch/move_base.launch"/> 
+
+  <!-- Run Fuzzy planner's components -->
+  <node name="danger_factor" pkg="fgm_plugin" type="danger_factor.py" />
+  <node name="fuzzy1" pkg="fgm_plugin" type="fuzzy1.py" />
+  <node name="fuzzy2" pkg="fgm_plugin" type="fuzzy2.py" />
+  <node name="scaled_lin_vel" pkg="fgm_plugin" type="scaled_linear_velocity.py" />
+  
+  <!-- Rviz-->
+  <node name="rviz" pkg="rviz" type="rviz"/>
+</launch>
+

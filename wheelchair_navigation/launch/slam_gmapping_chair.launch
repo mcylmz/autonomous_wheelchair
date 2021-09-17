@@ -1,0 +1,11 @@
+<launch>
+  <!-- https://github.com/ros-planning/navigation/issues/206 -->
+  
+
+  <arg name="scan_topic" value="/hosein_scan2" />
+  
+
+  <include file="$(find wheelchair_navigation)/launch/includes/gmapping.launch.xml"/>
+  
+
+</launch>

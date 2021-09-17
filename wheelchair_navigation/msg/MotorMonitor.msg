@@ -1,0 +1,14 @@
+float32 amps1
+float32 amps2
+float32 v_int
+float32 v_batt
+int32 rpm1
+int32 rpm2
+int32 encoder1
+int32 encoder2
+int32 cmd1
+int32 cmd2
+int32 temp1
+int32 temp2
+uint8 faultFlags
+string mode
