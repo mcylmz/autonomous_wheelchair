@@ -2,16 +2,6 @@
 
 A ROS Kinetic-based autonomous navigation system for powered wheelchairs with advanced safety features, custom planning algorithms, and comprehensive diagnostics.
 
-## 🌟 Key Features
-
-- **🛡️ Safety-First Design**: Emergency stop system with <10ms response time
-- **🔒 Thread-Safe Architecture**: Mutex-protected shared state, RAII resource management
-- **📊 Real-Time Diagnostics**: 7 independent health monitoring systems
-- **🎯 Advanced Navigation**: RRT* global planner + FGM (Fuzzy Gap Method) local planner
-- **⚙️ Flexible Configuration**: Centralized YAML-based parameter management
-- **🧪 Comprehensive Testing**: 90% code coverage with unit and integration tests
-- **📈 Smooth Motion Control**: Velocity ramping and dead-zone compensation
-
 ## 📋 System Requirements
 
 - **OS**: Ubuntu 16.04 LTS (Xenial)
