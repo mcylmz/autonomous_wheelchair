@@ -3,6 +3,13 @@
 IMPLEMENTATION_COMPLETE.md
 CODE_REVIEW.md
 TOPIC_REMAPPING.md
+IMPLEMENTATION_SUMMARY.md
+MIGRATION_GUIDE.md
+PHASE2_SUMMARY.md
+PHASE3_SUMMARY.md
+PROJECT_STATUS.md
+QUICK_START.md
+CLAUDE.md
 
 # Documentation directory (all generated docs)
 docs/architecture.md
