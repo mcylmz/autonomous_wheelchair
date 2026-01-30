@@ -52,6 +52,27 @@ namespace RRTStarPlugin
         float xGoal_;
         float yGoal_;
         float goalYaw_;
+
+        // Configurable parameters
+        double planningTimeout_;      // Maximum time for planning (seconds)
+        double turningRadius_;        // Minimum turning radius for Dubins curves (meters)
+        double optimizationTime_;     // Time to optimize path after finding solution (seconds)
+        double minPathLength_;        // Minimum acceptable path length (meters)
+        double maxPathLength_;        // Maximum acceptable path length (meters)
+        bool pathSimplification_;     // Enable path simplification
+        int interpolationNum_;        // Number of interpolation points
+
+        /**
+         * @brief Load parameters from ROS parameter server
+         */
+        void loadParameters();
+
+        /**
+         * @brief Validate planned path
+         * @param path The path to validate
+         * @return True if path is valid
+         */
+        bool isPathValid(const ompl::geometric::PathGeometric& path) const;
     };
 }
 

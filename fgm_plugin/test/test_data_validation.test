@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Data validation test launch file -->
+
+    <!-- Start roscore for tests -->
+    <node name="roscore" pkg="rosout" type="rosout" />
+
+    <!-- Load test parameters -->
+    <param name="/move_base/FGMPlanner/look_ahead_dist" value="2.75" />
+    <param name="~data_timeout_threshold" value="0.5" />
+
+    <!-- Run data validation tests -->
+    <test test-name="fgm_data_validation_test"
+          pkg="fgm_plugin"
+          type="test_data_validation"
+          time-limit="30.0" />
+</launch>

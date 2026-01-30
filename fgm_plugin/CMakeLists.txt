@@ -216,6 +216,15 @@ target_link_libraries(${PROJECT_NAME}
 ## Testing ##
 #############
 
+## Enable testing
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+  find_package(GTest REQUIRED)
+
+  # Include test directory
+  add_subdirectory(test)
+endif()
+
 ## Add gtest based cpp test target and link libraries
 # catkin_add_gtest(${PROJECT_NAME}-test test/test_fgm_plugin.cpp)
 # if(TARGET ${PROJECT_NAME}-test)

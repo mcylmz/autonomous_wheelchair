@@ -1,0 +1,71 @@
+# Navigation Planner Parameters
+# Configuration for global (RRT*) and local (FGM) planners
+
+# Global Planner (RRT* with Dubins curves)
+RRTStarPlugin:
+  # Planning parameters
+  planning_timeout: 5.0                # Maximum time for planning (seconds)
+  optimization_time: 1.0               # Time to optimize path after finding solution
+  turning_radius: 0.9                  # Minimum turning radius for Dubins curves (meters)
+
+  # Path quality
+  min_path_length: 0.5                 # Minimum acceptable path length (meters)
+  max_path_length: 100.0               # Maximum acceptable path length (meters)
+  path_simplification: true            # Simplify path to reduce waypoints
+
+  # Planning space
+  max_planning_distance: 50.0          # Maximum distance to plan (meters)
+  state_space_bounds: 100.0            # Bounds of state space (meters)
+
+# Local Planner (Fuzzy Gap Method)
+FGMPlanner:
+  # Look-ahead and goal parameters
+  look_ahead_dist: 2.75                # Distance to look ahead on global plan (meters)
+  goal_dist_tolerance: 1.0             # Distance to consider goal reached (meters)
+
+  # Data validation
+  data_timeout_threshold: 0.5          # Maximum age of sensor data (seconds)
+
+  # Gap detection
+  gap_threshold: 0.8                   # Minimum gap width to consider (meters)
+  obstacle_threshold: 0.5              # Distance to consider as obstacle (meters)
+
+  # Velocity scaling
+  max_linear_velocity: 1.5             # Maximum linear velocity (m/s)
+  min_linear_velocity: 0.1             # Minimum linear velocity (m/s)
+
+  # Heading controller (PID)
+  heading_p_gain: 0.75                 # Proportional gain
+  heading_i_gain: 0.0                  # Integral gain
+  heading_d_gain: 0.0                  # Derivative gain
+  heading_filter_constant: 50.0        # Derivative filter constant
+  max_angular_velocity: 0.940          # Maximum angular velocity (rad/s)
+
+  # Recovery behaviors
+  enable_recovery: true                # Enable recovery behaviors
+  recovery_patience: 10.0              # Time to wait before recovery (seconds)
+
+# Fuzzy velocity planner parameters
+fuzzy_velocity_planner:
+  danger_factor_threshold: 0.7         # Threshold for danger detection
+  min_safe_distance: 0.5               # Minimum safe distance (meters)
+  velocity_scale_factor: 1.0           # Global velocity scaling
+
+# Move base parameters (general)
+move_base:
+  controller_frequency: 10.0           # Control loop frequency (Hz)
+  planner_frequency: 1.0               # Global planning frequency (Hz)
+  planner_patience: 5.0                # Time to wait for valid plan (seconds)
+  controller_patience: 3.0             # Time to wait for valid control (seconds)
+
+  conservative_reset_dist: 3.0         # Distance for conservative reset (meters)
+  clearing_rotation_allowed: false     # Allow clearing rotations (not safe for wheelchair)
+  shutdown_costmaps: false             # Keep costmaps running
+  oscillation_timeout: 0.0             # Disabled for wheelchair
+  oscillation_distance: 0.0            # Disabled for wheelchair
+
+# Notes:
+# - look_ahead_dist affects smoothness (larger = smoother, less responsive)
+# - turning_radius should match wheelchair's physical constraints
+# - Tune heading PID gains for stability (start with P only)
+# - Conservative values recommended for indoor use

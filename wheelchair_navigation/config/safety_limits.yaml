@@ -1,0 +1,50 @@
+# Safety Limits Configuration
+# Maximum velocities, currents, temperatures, and other safety parameters
+
+safety_limits:
+  # Emergency stop settings
+  emergency_stop_enabled: true         # Enable emergency stop functionality
+  command_timeout: 0.2                 # Stop motors if no command for this long (seconds)
+
+  # Velocity limits
+  max_linear_velocity: 1.5             # Maximum forward velocity (m/s)
+  max_angular_velocity: 1.0            # Maximum rotational velocity (rad/s)
+  max_linear_acceleration: 0.8         # Maximum linear acceleration (m/s²)
+  max_angular_acceleration: 1.5        # Maximum angular acceleration (rad/s²)
+
+  # Motor current limits
+  max_motor_current: 30.0              # Maximum allowed motor current (Amps)
+  current_limit_duration: 5.0          # How long to allow max current (seconds)
+
+  # Motor temperature limits
+  max_motor_temp: 75                   # Critical motor temperature (°C)
+  motor_temp_warning: 60               # Warning temperature (°C)
+  motor_cooldown_temp: 50              # Temperature to resume after overheat (°C)
+
+  # Battery voltage limits
+  min_battery_voltage: 20.0            # Critical low voltage - stop operation (V)
+  battery_voltage_warning: 22.0        # Warning voltage - continue with caution (V)
+  max_battery_voltage: 29.0            # Maximum charging voltage (V)
+
+  # Communication timeouts
+  data_timeout_threshold: 0.5          # Max age of sensor data (seconds)
+  controller_timeout: 2.0              # Max time without controller response (seconds)
+
+  # Obstacle detection (if using sensors)
+  min_obstacle_distance: 0.3           # Minimum safe distance to obstacles (meters)
+  emergency_stop_distance: 0.15        # Trigger emergency stop at this distance (meters)
+
+  # Slope limits (if IMU available)
+  max_pitch_angle: 15.0                # Maximum forward/backward tilt (degrees)
+  max_roll_angle: 10.0                 # Maximum side tilt (degrees)
+
+  # Fault handling
+  auto_recover_from_faults: false      # Automatically try to recover from faults
+  max_fault_recovery_attempts: 3       # Number of recovery attempts before giving up
+
+# Safety notes:
+# - These limits protect the wheelchair, user, and environment
+# - Conservative limits are recommended for initial testing
+# - Adjust max_linear_velocity based on environment (indoor vs outdoor)
+# - Lower limits increase safety but reduce performance
+# - Test all limits in a controlled environment before deployment

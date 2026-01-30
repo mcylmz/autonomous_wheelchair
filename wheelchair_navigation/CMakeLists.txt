@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  diagnostic_updater
 )
 
 ## System dependencies are found with CMake's conventions
@@ -53,12 +54,14 @@ add_message_files(
   MotorMonitor.msg
   MotorReference.msg
   SpeedReference.msg
+  EmergencyStop.msg
 )
 
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
   ModeChange.srv
+  EmergencyStopService.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -132,12 +135,23 @@ include_directories(
 ## either from message generation or dynamic reconfigure
 # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-## Declare a C++ executable
+## Declare C++ executables
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/wheelchair_navigation_node.cpp)
-add_executable(wheelchair_node
+
+# Original implementation (kept for backward compatibility)
+add_executable(wheelchair_node_legacy
   src/ChairNode.cpp
+  src/RoboteqDevice.cpp
+  src/RoboteqExtended.cpp
+  src/jute.cpp
+)
+
+# Refactored implementation with thread safety, emergency stop, and diagnostics
+add_executable(wheelchair_node
+  src/ChairNodeRefactored.cpp
+  src/ChairController.cpp
+  src/WheelchairDiagnostics.cpp
   src/RoboteqDevice.cpp
   src/RoboteqExtended.cpp
   src/jute.cpp
@@ -154,12 +168,19 @@ add_executable(wheelchair_node
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+# Legacy node
+target_link_libraries(wheelchair_node_legacy
+  ${catkin_LIBRARIES}
+)
+
+# Refactored node
 target_link_libraries(wheelchair_node
   ${catkin_LIBRARIES}
 )
+
+# Add message dependencies
+add_dependencies(wheelchair_node_legacy ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(wheelchair_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 #############
 ## Install ##
@@ -206,6 +227,15 @@ target_link_libraries(wheelchair_node
 #############
 ## Testing ##
 #############
+
+## Enable testing
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+  find_package(GTest REQUIRED)
+
+  # Include test directory
+  add_subdirectory(test)
+endif()
 
 ## Add gtest based cpp test target and link libraries
 # catkin_add_gtest(${PROJECT_NAME}-test test/test_wheelchair_navigation.cpp)

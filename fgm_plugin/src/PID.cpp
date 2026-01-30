@@ -1,5 +1,7 @@
 #include "fgm_plugin/PID.h"
 #include <cmath>
+#include <stdexcept>
+#include <ros/ros.h>
 
 PIDController::PIDController()
 {
@@ -41,12 +43,12 @@ double PIDController::computeControlSignal(double error)
     // Compute output of the controller
     output_ = proportional_ + integrator_ + differentiator_;
 
-    // Output saturation
+    // Output saturation (FIXED: was setting Upper instead of Lower)
     if (output_ > outputSaturationUpper_)
         output_ = outputSaturationUpper_;
     else if (output_ < outputSaturationLower_)
-        output_ = outputSaturationUpper_;
-    
+        output_ = outputSaturationLower_;  // FIXED: was outputSaturationUpper_
+
     // Store error and measurement for the next iteration
     prevError_ = currentError;
 
@@ -78,11 +80,11 @@ double PIDController::derivativeFilteredControlSignal(double error)
     y0_ = -a1 / a0 * y1_ - a2 / a0 * y2_ + b0 / a0 * e0_ +
             b1 / a0 * e1_ + b2 / a0 * e2_;
 
-    // Output saturation
+    // Output saturation (FIXED: was setting Upper instead of Lower)
     if (y0_ > outputSaturationUpper_)
         y0_ = outputSaturationUpper_;
     else if (y0_ < outputSaturationLower_)
-        y0_ = outputSaturationUpper_;
+        y0_ = outputSaturationLower_;  // FIXED: was outputSaturationUpper_
 
     output_ = y0_;
     return output_;
@@ -97,12 +99,26 @@ void PIDController::setPIDCoeffs(double Kp, double Ki, double Kd)
 
 void PIDController::setIntegratorSaturations(double lowerIntSat, double upperIntSat)
 {
+    // Validate that lower < upper
+    if (lowerIntSat >= upperIntSat) {
+        ROS_ERROR("PID: Invalid integrator saturation limits: lower (%.3f) must be < upper (%.3f)",
+                  lowerIntSat, upperIntSat);
+        throw std::invalid_argument("Integrator saturation lower limit must be less than upper limit");
+    }
+
     integratorSatLower_ = lowerIntSat;
     integratorSatUpper_ = upperIntSat;
 }
 
 void PIDController::setOutputSaturations(double lowerSat, double upperSat)
 {
+    // Validate that lower < upper
+    if (lowerSat >= upperSat) {
+        ROS_ERROR("PID: Invalid output saturation limits: lower (%.3f) must be < upper (%.3f)",
+                  lowerSat, upperSat);
+        throw std::invalid_argument("Output saturation lower limit must be less than upper limit");
+    }
+
     outputSaturationLower_ = lowerSat;
     outputSaturationUpper_ = upperSat;
 }

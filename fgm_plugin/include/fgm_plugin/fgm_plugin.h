@@ -117,7 +117,19 @@ namespace fgm_plugin
         double errorOld_;
 
         // Last gap center informations
-        geometry_msgs::PointStamped gapPointMapFrame_;        
+        geometry_msgs::PointStamped gapPointMapFrame_;
+
+        // Data validation and staleness detection
+        ros::Time lastPoseTime_;
+        ros::Time lastLaserTime_;
+        ros::Time lastVelTime_;
+        double dataTimeoutThreshold_;  // seconds
+
+        /**
+         * @brief Check if all required sensor data is valid and not stale
+         * @return true if data is valid and fresh
+         */
+        bool isDataValid() const;
 
     }; // end class FGMPlannerROS
 

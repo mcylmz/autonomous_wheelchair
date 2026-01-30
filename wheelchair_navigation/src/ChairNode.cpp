@@ -26,8 +26,6 @@ int control_mode = -1;
 int pid_config = -1;
 
 // Function Prototypes
-// void referenceCallback(const chair::MotorReference::ConstPtr& msg);
-// bool modeChangeCallback(chair::ModeChange::Request &req, chair::ModeChange::Response &res);
 
 int singleSetCommand(const int command, const int index, const int arg) {
 	int status = device.FastSetCommand(command, index, arg);
@@ -198,8 +196,8 @@ void commandCallBack(const ros::TimerEvent &timer_event)
 		}
 		// First, stop the motors
 		dualSetCommand(_G, 0);
-		
-		// // Then put driver into PWM mode so that power stages will be turned off
+
+		// Then put driver into PWM mode so that power stages will be turned off
 		if (control_mode != CTRL_PWM) {
 			status = dualSetConfig(_MMOD, CTRL_PWM);
 			if (status == RQ_SUCCESS)
@@ -240,7 +238,6 @@ int main(int argc, char* argv[])
 	ros::Timer command_timer = n.createTimer(ros::Duration(0.1), commandCallBack);
 
 	spinner.spin();
-	// ros::spin();
 
 	return 0;
 }

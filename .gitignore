@@ -1,0 +1,76 @@
+# Documentation and explanation files created for this project
+# Keep README.md but ignore detailed documentation
+IMPLEMENTATION_COMPLETE.md
+CODE_REVIEW.md
+TOPIC_REMAPPING.md
+
+# Documentation directory (all generated docs)
+docs/architecture.md
+docs/safety_features.md
+docs/configuration_guide.md
+docs/troubleshooting.md
+docs/migration_guide.md
+
+# Keep README.md - explicitly not ignored
+!README.md
+
+# ROS / Catkin workspace
+build/
+devel/
+install/
+.catkin_workspace
+.catkin_tools/
+
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.egg-info/
+.pytest_cache/
+
+# C++
+*.o
+*.so
+*.a
+*.out
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+log/
+logs/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Test outputs
+test_results/
+Testing/
+
+# ROS bag files (can be large)
+*.bag
+*.bag.active
+
+# Config backups (if any)
+*_backup.yaml
+config_backup/
+params_backup.yaml
+
+# Build artifacts
+bin/
+lib/
+msg_gen/
+srv_gen/

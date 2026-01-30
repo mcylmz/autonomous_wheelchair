@@ -1,0 +1,88 @@
+# Master Wheelchair Configuration
+# This file loads all other configuration files for the autonomous wheelchair system
+
+# To use this configuration in a launch file:
+# <rosparam command="load" file="$(find wheelchair_navigation)/config/wheelchair_config.yaml" />
+
+# Hardware configuration (includes all other configs via rosparam load in launch file)
+# Note: YAML doesn't support includes, so you must load these in your launch file:
+#
+# <rosparam command="load" file="$(find wheelchair_navigation)/config/hardware_config.yaml" />
+# <rosparam command="load" file="$(find wheelchair_navigation)/config/safety_limits.yaml" />
+# <rosparam command="load" file="$(find wheelchair_navigation)/config/motor_params.yaml" />
+# <rosparam command="load" file="$(find wheelchair_navigation)/config/diagnostics.yaml" />
+# <rosparam command="load" file="$(find wheelchair_navigation)/config/planner_params.yaml" />
+
+# Alternatively, this master file contains critical parameters that override defaults
+
+# Node-specific configurations
+wheelchair_node:
+  # Use hardware_config.yaml values
+  device_path: "/dev/ttyACM0"
+  command_timeout: 0.2
+  monitor_rate: 50.0
+  command_rate: 10.0
+  max_retries: 5
+  retry_delay: 1.0
+
+twist_to_motors:
+  # Use motor_params.yaml values
+  wheel_diameter: 0.380
+  gear_ratio: 32
+  base_width: 0.59
+  max_rpm: 1500
+  max_command: 1000
+  min_effective_command: 15
+  min_motor_output: 100
+  enable_ramping: true
+  max_acceleration: 500
+  ramp_rate: 50
+
+# System-wide settings
+system:
+  robot_name: "autonomous_wheelchair"
+  robot_description_package: "wheelchair_navigation"
+  use_sim_time: false
+  log_level: "info"  # debug, info, warn, error
+
+# Environment settings
+environment:
+  indoor: true
+  max_speed_indoor: 1.0      # m/s
+  max_speed_outdoor: 1.5     # m/s
+
+# Feature flags
+features:
+  enable_diagnostics: true
+  enable_emergency_stop: true
+  enable_obstacle_avoidance: true
+  enable_recovery_behaviors: true
+  enable_path_recording: false
+  enable_telemetry_logging: false
+
+# Operational modes
+operational_mode:
+  # Options: "manual", "assisted", "autonomous"
+  default_mode: "autonomous"
+  allow_mode_switching: true
+
+# Logging and debugging
+logging:
+  log_motor_commands: false
+  log_sensor_data: false
+  log_navigation_events: true
+  log_diagnostics: true
+  log_directory: "/tmp/wheelchair_logs"
+
+# Performance tuning
+performance:
+  use_multithreading: false  # Keep false for serial safety
+  optimize_for_latency: true
+  optimize_for_battery: false
+
+# Notes:
+# - This is a master configuration file for reference
+# - In practice, load individual config files in launch files
+# - Adjust parameters based on testing and environment
+# - Keep backups of working configurations
+# - Document any changes made for specific environments

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Integration test launch file -->
+
+    <!-- Start roscore for tests -->
+    <node name="roscore" pkg="rosout" type="rosout" />
+
+    <!-- Load test parameters -->
+    <rosparam command="load" file="$(find wheelchair_navigation)/config/hardware_config.yaml" />
+    <rosparam command="load" file="$(find wheelchair_navigation)/config/safety_limits.yaml" />
+
+    <!-- Run integration tests -->
+    <test test-name="wheelchair_integration_test"
+          pkg="wheelchair_navigation"
+          type="test_integration"
+          time-limit="60.0" />
+</launch>

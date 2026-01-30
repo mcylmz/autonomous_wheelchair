@@ -1,0 +1,8 @@
+# Emergency Stop Service
+# Triggers or releases emergency stop
+
+bool activate        # True to activate emergency stop, false to release
+string reason        # Reason for the emergency stop request
+---
+bool success         # True if the operation succeeded
+string message       # Status message

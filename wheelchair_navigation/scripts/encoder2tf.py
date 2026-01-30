@@ -76,9 +76,9 @@ class DiffTf:
         self.dx = 0                 # speeds in x/rotation
         self.dr = 0
 
-	self.yaw = 0.01
-	self.pitch = 0.01
-	self.roll = 0.01
+        self.yaw = 0.01
+        self.pitch = 0.01
+        self.roll = 0.01
 
         self.then = rospy.Time.now()
 

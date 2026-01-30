@@ -1,0 +1,39 @@
+# Hardware Configuration
+# Physical specifications and device connections for the wheelchair
+
+wheelchair_hardware:
+  # Motor controller connection
+  device_path: "/dev/ttyACM0"         # Serial port for Roboteq controller
+  baud_rate: 115200                    # Serial communication baud rate
+
+  # Physical dimensions
+  wheel_diameter: 0.390                # Wheel diameter in meters (measured)
+  wheel_base: 0.59                     # Distance between wheels in meters
+  wheel_track: 0.59                    # Same as wheel_base for differential drive
+
+  # Drive system
+  gear_ratio: 32                       # Gearbox reduction ratio
+  encoder_ticks_per_revolution: 1024   # Encoder resolution
+
+  # Encoder calibration (correction factors)
+  encoder_correction_left: 0.980       # Multiply left encoder by this
+  encoder_correction_right: 0.991      # Multiply right encoder by this
+
+  # Motor specifications
+  motor_max_rpm: 1500                  # Maximum motor RPM
+  motor_rated_current: 20.0            # Rated continuous current (Amps)
+  motor_peak_current: 40.0             # Peak current for short duration (Amps)
+
+  # Controller limits
+  max_command_value: 1000              # Maximum command value for controller
+
+  # Battery specifications
+  battery_nominal_voltage: 24.0        # Nominal battery voltage (V)
+  battery_cells: 6                     # Number of cells (for SLA: 12V x 2)
+  battery_capacity_ah: 55.0            # Battery capacity in Amp-hours
+
+# Notes:
+# - Measure wheel_diameter and wheel_base accurately for odometry
+# - encoder_correction factors compensate for wear and manufacturing variance
+# - Adjust device_path if controller is on different port
+# - Battery specs help estimate runtime and set voltage thresholds

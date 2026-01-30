@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Master test launch file - runs all tests in sequence -->
+
+    <arg name="run_integration_tests" default="true" />
+    <arg name="run_unit_tests" default="true" />
+
+    <!-- Unit Tests (no ROS required) -->
+    <group if="$(arg run_unit_tests)">
+        <test test-name="chair_controller_unit_test"
+              pkg="wheelchair_navigation"
+              type="test_chair_controller"
+              time-limit="30.0" />
+
+        <test test-name="pid_controller_unit_test"
+              pkg="fgm_plugin"
+              type="test_pid_controller"
+              time-limit="30.0" />
+
+        <test test-name="velocity_mapping_unit_test"
+              pkg="wheelchair_navigation"
+              type="test_velocity_mapping.py"
+              time-limit="30.0" />
+    </group>
+
+    <!-- Integration Tests (require ROS) -->
+    <group if="$(arg run_integration_tests)">
+        <!-- Load configurations -->
+        <rosparam command="load" file="$(find wheelchair_navigation)/config/wheelchair_config.yaml" />
+
+        <include file="$(find wheelchair_navigation)/test/test_integration.test" />
+        <include file="$(find fgm_plugin)/test/test_data_validation.test" />
+    </group>
+</launch>

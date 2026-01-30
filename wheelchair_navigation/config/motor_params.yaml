@@ -1,0 +1,27 @@
+# Motor Configuration Parameters
+# These parameters control the velocity mapping from cmd_vel to motor commands
+
+# Physical wheelchair parameters
+wheel_diameter: 0.380          # meters
+gear_ratio: 32                 # gearbox reduction ratio
+wheel_base: 0.59              # distance between wheels (meters)
+
+# Motor controller limits
+max_rpm: 1500                  # maximum motor RPM
+max_command: 1000              # maximum command value (driver input range)
+
+# Dead-zone handling
+# Commands below min_effective_command are treated as zero
+# Commands between min_effective_command and max are linearly scaled
+# to output between min_motor_output and max_command
+min_effective_command: 15      # minimum meaningful command value (below this = stop)
+min_motor_output: 100          # minimum output sent to motors (prevents stall)
+
+# Velocity ramping (acceleration limits)
+enable_ramping: true           # enable velocity ramping
+max_acceleration: 500          # max change in command value per second (cmd/s)
+ramp_rate: 50                  # rate at which to check ramping (Hz)
+
+# Encoder corrections (calibration factors)
+encoder_correction_left: 0.980
+encoder_correction_right: 0.991

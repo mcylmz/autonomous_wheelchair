@@ -1,0 +1,108 @@
+# Error Recovery Configuration
+# Parameters for automatic error recovery and fault tolerance
+
+error_recovery:
+  # Enable/disable automatic recovery
+  auto_recover: true                   # Set false to require manual intervention
+
+  # Retry parameters
+  max_retries: 3                       # Maximum retry attempts before giving up
+  retry_base_delay: 0.5                # Initial retry delay (seconds)
+  retry_max_delay: 5.0                 # Maximum retry delay (seconds, exponential backoff)
+
+  # Degraded mode
+  degraded_threshold: 10               # Number of errors before entering degraded mode
+  degraded_mode_actions:
+    - "reduce_max_velocity"
+    - "increase_safety_margins"
+    - "notify_operator"
+
+  # Error-specific recovery strategies
+  # Options: "retry", "reconnect", "reset", "emergency_stop", "notify"
+  strategies:
+    DEVICE_COMMUNICATION_ERROR: "retry"
+    DEVICE_CONNECTION_FAILED: "reconnect"
+    MOTOR_FAULT: "reset"
+    EMERGENCY_STOP_ACTIVE: "notify"
+    COMMAND_TIMEOUT: "reset"
+    INVALID_STATE_TRANSITION: "reset"
+
+  # Escalation rules (after N consecutive errors, change strategy)
+  escalation:
+    DEVICE_COMMUNICATION_ERROR:
+      after_errors: 5
+      escalate_to: "reconnect"
+
+    MOTOR_FAULT:
+      after_errors: 2
+      escalate_to: "emergency_stop"
+
+  # Recovery timeouts
+  recovery_timeout: 30.0               # Maximum time to spend on recovery (seconds)
+  recovery_interval: 60.0              # Min time between recovery attempts (seconds)
+
+  # Fault cooldown (reset error counts after this time without errors)
+  error_cooldown_time: 300.0           # 5 minutes
+
+# Logging configuration
+logging:
+  # Error logging
+  log_all_errors: true
+  log_recovery_attempts: true
+  log_to_file: true
+  log_file_path: "/tmp/wheelchair_errors.log"
+  log_file_max_size_mb: 10
+  log_rotation_count: 5
+
+  # Verbosity levels
+  # Options: "debug", "info", "warn", "error"
+  console_level: "info"
+  file_level: "debug"
+
+  # What to log
+  log_motor_commands: false            # Very verbose
+  log_sensor_data: false               # Very verbose
+  log_state_transitions: true
+  log_parameter_changes: true
+  log_diagnostics: true
+
+  # Performance logging
+  log_timing: false                    # Log execution times
+  log_frequency: false                 # Log message frequencies
+
+# Notification settings
+notifications:
+  enable_notifications: true
+
+  # Notification methods
+  methods:
+    - "ros_topic"                      # Publish to /wheelchair/notifications
+    - "ros_console"                    # ROS_ERROR/WARN/INFO
+    # - "email"                        # Email notifications (requires setup)
+    # - "sms"                          # SMS notifications (requires setup)
+
+  # What to notify about
+  notify_on_error: true
+  notify_on_recovery_failure: true
+  notify_on_degraded_mode: true
+  notify_on_emergency_stop: true
+  notify_on_low_battery: true
+  notify_on_high_temperature: true
+
+  # Notification throttling (avoid spam)
+  notification_interval: 60.0          # Minimum seconds between same notification
+
+# Statistics and monitoring
+statistics:
+  enable_statistics: true
+  reset_interval: 3600.0               # Reset statistics every hour
+  publish_statistics: true
+  statistics_topic: "/wheelchair/error_statistics"
+  statistics_rate: 0.1                 # Hz (every 10 seconds)
+
+# Notes:
+# - Auto-recovery is generally safe for communication errors
+# - Motor faults and emergency stops should require manual intervention
+# - Adjust retry delays based on expected recovery times
+# - Enable logging for debugging, but it can generate large files
+# - Use degraded mode to continue operation with reduced capabilities
