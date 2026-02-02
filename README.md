@@ -18,6 +18,20 @@ The paper describes the hardware conversion, sensor integration, and initial aut
 
 **For developers**: Reading the paper provides valuable context about the hardware platform, sensor setup, and design decisions that inform this implementation.
 
+## ⚠️ Important Notice
+
+**AI-Assisted Refactoring**: Version 2.0 includes significant code refactoring performed with AI assistance (Claude Code). While comprehensive testing has been implemented and safety features enhanced, users should:
+
+- ⚠️ **Test thoroughly** in a safe, controlled environment before any real-world deployment
+- ⚠️ **Review all code changes** carefully, especially safety-critical sections
+- ⚠️ **Validate functionality** with your specific hardware configuration
+- ⚠️ **Run the complete test suite** (`catkin_make run_tests`) before use
+- ⚠️ **Use at your own risk** - this is research software, not production equipment
+
+**No warranties expressed or implied. This software is provided "as-is" for research and development purposes only.**
+
+See the full Safety Notice at the bottom of this README for additional precautions.
+
 ## 📋 System Requirements
 
 - **OS**: Ubuntu 16.04 LTS (Xenial)
