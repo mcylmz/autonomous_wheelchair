@@ -2,6 +2,22 @@
 
 A ROS Kinetic-based autonomous navigation system for powered wheelchairs with advanced safety features, custom planning algorithms, and comprehensive diagnostics.
 
+## 📖 Background
+
+This project builds upon the autonomous wheelchair testbed described in:
+
+**"Conversion of a conventional wheelchair into an autonomous personal transportation testbed"**
+*Sezer, V., Zengin, R. S., Houshyari, H., & Yilmaz, M. C. (2020). Service Robotics, IntechOpen.*
+🔗 [Read the paper](https://www.intechopen.com/chapters/72660)
+
+The paper describes the hardware conversion, sensor integration, and initial autonomous capabilities. This repository (Version 2.0) extends that work with:
+- Enhanced safety features and emergency stop system
+- Thread-safe architecture for reliable operation
+- Comprehensive diagnostics and error recovery
+- Production-ready code with extensive testing
+
+**For developers**: Reading the paper provides valuable context about the hardware platform, sensor setup, and design decisions that inform this implementation.
+
 ## 📋 System Requirements
 
 - **OS**: Ubuntu 16.04 LTS (Xenial)
