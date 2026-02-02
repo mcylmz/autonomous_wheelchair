@@ -428,22 +428,6 @@ Contributions are welcome! Please:
 5. Update documentation
 6. Submit a pull request
 
-## 📄 License
-
-[Specify your license here]
-
-## 🙏 Acknowledgments
-
-- ROS community for the navigation stack
-- OMPL for motion planning library
-- Roboteq for motor controller support
-
-## 📧 Contact
-
-For questions, issues, or support:
-- GitHub Issues: [Create an issue](https://github.com/yourusername/autonomous_wheelchair/issues)
-- Email: [your.email@example.com]
-
 ## ⚠️ Safety Notice
 
 This system is designed for research and development purposes. Clinical deployment requires:
@@ -497,5 +481,3 @@ catkin_make run_tests
 - Visualize: `rviz -d $(rospack find wheelchair_navigation)/rviz/wheelchair.rviz`
 
 ---
-
-**Status**: ✅ Production-ready with comprehensive safety features and full test coverage.
